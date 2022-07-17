@@ -7,7 +7,7 @@
     "watch": "parcel watch",
     "check": "tsc --noEmit",
     "build": "npm run check && parcel build src/content-script.ts",
-    "postbuild": "cp styles.css manifest.json dist/"
+    "postbuild": "cp styles.css manifest.json dist/ && cp -R icons dist/"
   },
   "repository": {
     "type": "git",
