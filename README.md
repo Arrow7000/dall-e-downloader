@@ -14,6 +14,9 @@ When you click the button it will download a zip folder containing all the gener
 - [ ] Make a logo for the extension
 - [ ] Generate icons from the logo and add to the manifest
 - [ ] Allow custom naming conventions for the images in the zip file
+- [ ] Set up GitHub Actions pipeline to create releases and attach release assets
+- [ ] Submit to Chrome Store
+- [ ] Submit to Firefox Store
 
 # Contributions
 

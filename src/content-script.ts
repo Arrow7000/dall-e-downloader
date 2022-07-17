@@ -67,8 +67,7 @@ async function downloadImagesAsZip() {
   } else {
     const imgUrls = [...images.values()].map((img) => img.src);
 
-    const zip = new JSZip();
-    const folder = zip.folder(title) as JSZip;
+    const folder = new JSZip();
 
     const blobsAndNames = await Promise.all(
       imgUrls.map((imgUrl, i) => {
