@@ -1,19 +1,13 @@
 {
   "name": "DALL-E 2 Image Downloader",
-  "description": "Lets you download all 6 generated images into a single zip file labelled with the text of your prompt, so you don't lose any of your work",
-  "version": "1.0",
+  "description": "Adds a button to the DALL·E 2 web app that lets you download generated images along with the prompt that generated them.",
+  "version": "0.0.1",
   "manifest_version": 3,
   "content_scripts": [
     {
       "matches": ["https://*.openai.com/*"],
       "css": ["styles.css"],
-      "js": [
-        "content-script.js",
-        "FileSaver.js",
-        "zip.min.js",
-        "blob-util.min.js"
-      ]
+      "js": ["content-script.js"]
     }
-  ],
-  "permissions": ["activeTab", "tabs"]
+  ]
 }
