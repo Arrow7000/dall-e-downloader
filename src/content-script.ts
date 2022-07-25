@@ -2,6 +2,8 @@ import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { imgSrcToBlob } from "blob-util";
 
+import patcherScript from "url:./script";
+
 const buttonId = "dall-e-images-downloader-button";
 
 waitForGridToExist();
@@ -87,3 +89,19 @@ async function downloadImagesAsZip() {
     });
   }
 }
+
+/**
+ * The below code injects the contents of script.ts into the page with regular
+ * access to everything! Which means the window.fetch function can be
+ * monkeypatched!!!!!
+ */
+
+// To remove the prefix of `chrome-extension://nfjhecfhccemmdcdcfhemhljbjjhakim/` and just get the filename directly
+const filename = patcherScript.replace(/^.*[\\\/]/, "");
+
+const s = document.createElement("script");
+s.src = chrome.runtime.getURL(filename);
+s.onload = function () {
+  this.remove();
+};
+(document.head || document.documentElement).appendChild(s);
