@@ -1,13 +1,13 @@
 {
-  "name": "DALL-E 2 Image Downloader",
+  "name": "DALL·E 2 Image Downloader",
   "description": "Adds a button to the DALL·E 2 web app that lets you download generated images along with the prompt that generated them.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 3,
   "content_scripts": [
     {
-      "matches": ["https://*.openai.com/*"],
+      "matches": ["https://labs.openai.com/*"],
       "css": ["styles.css"],
-      "js": ["content-script.js"]
+      "js": ["src/content-script.ts"]
     }
   ],
   "icons": {
