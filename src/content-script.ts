@@ -72,10 +72,10 @@ async function downloadImagesAsZip() {
     }
   }
 
-  var titlek = document
+  var titleFromPrompt = document
     .querySelector<HTMLInputElement>(".image-prompt-input")
     ?.value.trim();
-  const title = titlek === undefined ? "Hobana" : titlek;
+  const title = titleFromPrompt === undefined ? "AllImages" : titleFromPrompt;
 
   const imgUrls = [...images.values()].map((img) => img.src);
 
