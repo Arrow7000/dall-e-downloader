@@ -12,6 +12,7 @@ waitForGridToExist();
 function waitForGridToExist() {
   setTimeout(() => {
     const imageGrid = document.querySelector(".task-page-generations-grid");
+    const pagination = document.querySelector(".paginated-generations");
     if (imageGrid !== null) {
       // Once the container has loaded
       const button = document.getElementById(buttonId);
@@ -22,8 +23,18 @@ function waitForGridToExist() {
         attachButton(imageGrid);
       }
     }
+    else if (pagination !== null) {
+      const button = document.getElementById(buttonId);
 
-    waitForGridToExist();
+      if (button === null) {
+        // Only reattach if the button doesn't already exist
+
+        attachButton(pagination);
+      }
+    }
+    else {
+      waitForGridToExist();
+    }
   }, 500);
 }
 
@@ -48,42 +59,42 @@ function attachButton(imageGrid: Element) {
 }
 
 async function downloadImagesAsZip() {
-  const images = document.querySelectorAll<HTMLImageElement>(
+  var images = document.querySelectorAll<HTMLImageElement>(
     ".task-page .generated-image > img"
   );
 
   if (images.length <= 0) {
-    throw new Error("No generated images found");
+    images = document.querySelectorAll<HTMLImageElement>(
+      ".pagination-content .generated-image > img"
+    );
+    if (images.length <= 0) {
+      throw new Error("No generated images found");
+    }
   }
 
-  const title = document
+  var titlek = document
     .querySelector<HTMLInputElement>(".image-prompt-input")
     ?.value.trim();
+  const title = titlek === undefined ? "Hobana" : titlek;
 
-  if (title === undefined) {
-    throw new Error(
-      "Cannot find the prompt input field so unable to generate a title for the download"
-    );
-  } else {
-    const imgUrls = [...images.values()].map((img) => img.src);
+  const imgUrls = [...images.values()].map((img) => img.src);
 
-    const folder = new JSZip();
+  const folder = new JSZip();
 
-    const blobsAndNames = await Promise.all(
-      imgUrls.map((imgUrl, i) => {
-        return imgSrcToBlob(imgUrl, "image/png", "Anonymous").then((blob) => {
-          const name = `${title.slice(0, 30)} - ${i + 1}.png`;
-          return { name, blob };
-        });
-      })
-    );
+  const blobsAndNames = await Promise.all(
+    imgUrls.map((imgUrl, i) => {
+      return imgSrcToBlob(imgUrl, "image/png", "Anonymous").then((blob) => {
+        const name = `${title.slice(0, 30)} - ${i + 1}.png`;
+        return { name, blob };
+      });
+    })
+  );
 
-    blobsAndNames.forEach(({ blob, name }) => {
-      folder.file(name, blob);
-    });
+  blobsAndNames.forEach(({ blob, name }) => {
+    folder.file(name, blob);
+  });
 
-    folder.generateAsync({ type: "blob" }).then((content) => {
-      saveAs(content, title + ".zip");
-    });
-  }
+  folder.generateAsync({ type: "blob" }).then((content) => {
+    saveAs(content, title + ".zip");
+  });
 }
